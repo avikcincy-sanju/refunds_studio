@@ -119,7 +119,7 @@ Final AIP: ${result.finalAIP.toFixed(2)}
             </div>
           </div>
           <h1 className="text-5xl font-semibold text-gray-900 mb-3 tracking-tight">
-            AIP Calculator / Forecast / Refund Studio
+            IRONMAN - AIP Calculator / Forecast / Refund Studio
           </h1>
           <p className="text-sm text-gray-500">
             For any Feedback and Enhancements please contact Frankie McDermond -{' '}
