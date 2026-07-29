@@ -190,7 +190,10 @@ function findNjukoMatchBase(
   const uniqueAIPs = new Map<number, number>();
   for (let base = minBase; base <= maxBase; base += 0.01) {
     const result = forwardRounded(base, gstPercent, processingFeePercent, gstOnProcessingFeePercent);
-    if (!uniqueAIPs.has(result.finalAIP) || Math.abs(base - estimatedBase) < Math.abs(uniqueAIPs.get(result.finalAIP)! - estimatedBase)) {
+    if (
+      !uniqueAIPs.has(result.finalAIP) ||
+      Math.abs(base - estimatedBase) < Math.abs(uniqueAIPs.get(result.finalAIP)! - estimatedBase)
+    ) {
       uniqueAIPs.set(result.finalAIP, base);
     }
   }
@@ -237,9 +240,20 @@ export function calculateReverseAIP(
   const estimatedBase = rawBasePrice;
 
   if (useNjukoMatch) {
-    const matchResult = findNjukoMatchBase(finalAIP, gstPercent, processingFeePercent, gstOnProcessingFeePercent, estimatedBase);
+    const matchResult = findNjukoMatchBase(
+      finalAIP,
+      gstPercent,
+      processingFeePercent,
+      gstOnProcessingFeePercent,
+      estimatedBase
+    );
 
-    const njukoResult = forwardRounded(matchResult.basePrice, gstPercent, processingFeePercent, gstOnProcessingFeePercent);
+    const njukoResult = forwardRounded(
+      matchResult.basePrice,
+      gstPercent,
+      processingFeePercent,
+      gstOnProcessingFeePercent
+    );
 
     return {
       basePrice: roundToPrecision(matchResult.basePrice, precision),
@@ -251,9 +265,9 @@ export function calculateReverseAIP(
       rawValues: {
         basePrice: rawBasePrice,
         gstOnBasePrice: matchResult.basePrice * g,
-        priceAfterGst: matchResult.basePrice + (matchResult.basePrice * g),
-        processingFee: (matchResult.basePrice + (matchResult.basePrice * g)) * p,
-        gstOnProcessingFee: ((matchResult.basePrice + (matchResult.basePrice * g)) * p) * f,
+        priceAfterGst: matchResult.basePrice + matchResult.basePrice * g,
+        processingFee: (matchResult.basePrice + matchResult.basePrice * g) * p,
+        gstOnProcessingFee: (matchResult.basePrice + matchResult.basePrice * g) * p * f,
         finalAIP,
       },
       matchInfo: {
@@ -306,6 +320,7 @@ export const CURRENCY_SYMBOLS: Record<string, string> = {
   EUR: '€',
   GBP: '£',
   AUD: 'A$',
+  CHF: 'CHF ',
 };
 
 export function formatCurrency(amount: number, currency: string): string {
