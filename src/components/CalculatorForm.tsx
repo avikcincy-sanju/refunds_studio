@@ -153,7 +153,6 @@ export function CalculatorForm({
             <option value="EUR">EUR - Euro</option>
             <option value="GBP">GBP - British Pound</option>
             <option value="AUD">AUD - Australian Dollar</option>
-            <option value="CHF">CHF - Swiss Franc</option>
           </select>
         </div>
 

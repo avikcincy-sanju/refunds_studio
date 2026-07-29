@@ -306,9 +306,9 @@ export const CURRENCY_SYMBOLS: Record<string, string> = {
   EUR: '€',
   GBP: '£',
   AUD: 'A$',
-  CHF: 'CHF ',
 };
 
 export function formatCurrency(amount: number, currency: string): string {
   const symbol = CURRENCY_SYMBOLS[currency] || currency;
   return `${symbol}${amount.toFixed(2)}`;
+}
